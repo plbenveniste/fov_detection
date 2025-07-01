@@ -22,3 +22,5 @@ for x in unique_values:
 print(f"Cervical vertebrae present: {C}")
 print(f"Thoracic vertebrae present: {T}")
 print(f"Lumbar vertebrae present: {L}")
+
+#print ,modif
