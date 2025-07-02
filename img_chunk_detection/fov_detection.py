@@ -10,8 +10,8 @@ def Parse_Args():
     return parser.parse_args()
 
 
-def from_output_to_bool(output_path):
-    img = nib.load(output_path)
+def from_output_to_bool(img_path):
+    img = nib.load(img_path)
     data = img.get_fdata()
     print(f"Dimensions : {data.shape}")
     # ici on print les valeurs uniques
@@ -34,7 +34,7 @@ def from_output_to_bool(output_path):
     return C, T, L
 
 
-def from_output_to_csv(output_path, path_to_csv, C, T, L):
+def from_output_to_csv(img_path, path_to_csv, C, T, L):
     # This function is a placeholder for future implementation
     # It should convert the output to a CSV file containing vertebrae information
     # Vérifie si le fichier existe déjà
@@ -48,15 +48,15 @@ def from_output_to_csv(output_path, path_to_csv, C, T, L):
     with open(path_to_csv, 'a', encoding='utf-8') as f:
         if not file_exists:
             f.write("Image_path,Cervical,Thoracic,Lumbar\n")
-        f.write(f"{output_path},{C},{T},{L}\n")
+        f.write(f"{img_path},{C},{T},{L}\n")
 
 
 def main():
     args = Parse_Args()
-    output_path = args.i
+    img_path = args.i
     path_to_csv = args.path_to_csv
-    C, T, L = from_output_to_bool(output_path)
-    from_output_to_csv(output_path, path_to_csv, C, T, L)
+    C, T, L = from_output_to_bool(img_path)
+    from_output_to_csv(img_path, path_to_csv, C, T, L)
 
 if __name__ == "__main__":
     main()
