@@ -1,3 +1,15 @@
+"""
+This script runs the totalspineseg segmentation on a NIfTI image to identify vertebrae.
+
+Input: 
+    -i: path to the NIfTI image serving as input for totalspineseg
+    -o: path to save the segmented images returned by totalspineseg
+
+Output:
+    -o: the segmented NIfTI images containing vertebrae segmentation
+
+Author: Nathan Benveniste
+"""
 import argparse
 import os
 
@@ -5,7 +17,7 @@ import os
 def parse_args():
     parser = argparse.ArgumentParser(description="Identify vertebrae in a NIfTI image")
     parser.add_argument('-i', type=str, required=True, help='Path to the NIfTI image serving as input for totalspineseg')
-    parser.add_argument('-o', type=str, required=True, help='Path to save the segmented image returned by totalspineseg')
+    parser.add_argument('-o', type=str, required=True, help='Path to save the segmented images returned by totalspineseg')
     return parser.parse_args()
 
 

@@ -1,3 +1,15 @@
+"""
+This script runs the totalspineseg segmentation on a dataset containing NIfTI images to identify vertebrae and saves the results in a CSV file.
+
+Input: 
+    -i: path to the folder containing NIfTI images serving as input for totalspineseg
+    -path_to_csv: path to save the CSV file containing vertebrae information
+
+Output:
+    -path_to_csv: the updated CSV file containing the vertebrae information
+
+Author: Nathan Benveniste
+"""
 import pathlib
 from run_totalspineseg import totalspineseg
 from fov_detection import from_output_to_bool, from_output_to_csv
@@ -29,9 +41,9 @@ def run_all_imgs(input_path, output_path, path_to_csv):
     # Process the output to get vertebrae information
     output_path = output_path.split(".nii.gz")
     output_path = "".join(output_path) + "_step2_output.nii.gz"
-    C, T, L = from_output_to_bool(output_path)
+    C, T, L, unique_val = from_output_to_bool(output_path)
     # Save the vertebrae information to a CSV file
-    from_output_to_csv(input_path, path_to_csv, C, T, L)
+    from_output_to_csv(input_path, path_to_csv, C, T, L, unique_val)
 
 
 if __name__ == "__main__":
