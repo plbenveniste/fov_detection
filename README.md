@@ -42,6 +42,8 @@ Install the required Python packages such as nibabel:
 pip install nibabel
 ```
 
+---
+
 ### 4. Download the required dataset
 
 Install this particular dataset and make sure to have git installed on your computer:
