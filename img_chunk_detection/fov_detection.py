@@ -23,17 +23,18 @@ def Parse_Args():
 
 
 def from_output_to_bool(img_path):
+    # This function processes the NIfTI image to determine the presence of cervical, thoracic, and lumbar vertebrae.
     img = nib.load(img_path)
     data = img.get_fdata()
     print(f"Dimensions : {data.shape}")
-    # ici on print les valeurs uniques
+    # Print unique values
     unique_values = set(data.flatten())
     print(f"Unique values in the image: {unique_values}")
-    # on détermine quels types de vertèbres sont présents
+    # Determine which types of vertebrae are present
     # Cervical vertebrae: 11-17
     # Thoracic vertebrae: 21-32
     # Lumbar vertebrae: 41-45
-    # On vérifie si les valeurs uniques contiennent des vertèbres cervicales, thoraciques ou lombaires
+    # Verify if the unique values contain cervical, thoracic, or lumbar vertebrae
     C = any(11 <= x <= 17 for x in unique_values)
     T = any(21 <= x <= 32 for x in unique_values)
     L = any(41 <= x <= 45 for x in unique_values)
@@ -42,7 +43,9 @@ def from_output_to_bool(img_path):
 
 
 def from_output_to_csv(img_path, path_to_csv, C, T, L, unique_values):
-    # Dictionnaire des vertèbres à tester
+    # This function is a placeholder for future implementation
+    # It should convert the output to a CSV file containing vertebrae information
+    # Dictionaries to link vertebrae labels to their names
     VERTEBRAE_LABELS = {
         11: "vertebrae_C1", 12: "vertebrae_C2", 13: "vertebrae_C3", 14: "vertebrae_C4",
         15: "vertebrae_C5", 16: "vertebrae_C6", 17: "vertebrae_C7",
@@ -52,10 +55,8 @@ def from_output_to_csv(img_path, path_to_csv, C, T, L, unique_values):
         41: "vertebrae_L1", 42: "vertebrae_L2", 43: "vertebrae_L3", 44: "vertebrae_L4",
         45: "vertebrae_L5"
     }
-    # This function is a placeholder for future implementation
-    # It should convert the output to a CSV file containing vertebrae information
-    # Vérifie si le fichier existe déjà
-    # Construction des données par vertèbre
+    # Verify if the file already exists
+    # Construction of the data by vertebra presence
     vertebrae_presence = {label: "True" if label in unique_values else "False" for label in VERTEBRAE_LABELS}
     try:
         with open(path_to_csv, 'r', encoding='utf-8') as f:
@@ -63,7 +64,7 @@ def from_output_to_csv(img_path, path_to_csv, C, T, L, unique_values):
     except FileNotFoundError:
         file_exists = False
 
-    # Ouvre le fichier en mode ajout (ou crée-le)
+    # Open the file (or create it if it doesn't exist)
     with open(path_to_csv, 'a') as f:
         if not file_exists:
             header = ["Image_path", "Cervical", "Thoracic", "Lumbar"] + list(VERTEBRAE_LABELS.values())

@@ -25,17 +25,21 @@ def parse_args():
 
 
 def get_all_imgs(input_path):
+    # Get all NIfTI images in the input path recursively
     imgs_list = list(pathlib.Path(input_path).rglob("*.nii.gz"))
     # conversion to string
     imgs_list = [str(img) for img in imgs_list] 
     # Remove derivatives
     imgs_list = [img for img in imgs_list if "derivatives" not in img]
+    # Remove sourcedata
     imgs_list = [img for img in imgs_list if "sourcedata" not in img]
     imgs_list = [img for img in imgs_list if  "/dwi/" not in img]  # Exclude DWI images
     return imgs_list
 
 
-def run_all_imgs(input_path, output_path, path_to_csv):
+def run_all_tasks(input_path, output_path, path_to_csv):
+    # Run all functions defined previously
+    # Run totalspineseg, determine vertebrae presence, and save to CSV
     # Run totalspineseg
     totalspineseg(input_path, output_path)
     # Process the output to get vertebrae information
@@ -45,8 +49,7 @@ def run_all_imgs(input_path, output_path, path_to_csv):
     # Save the vertebrae information to a CSV file
     from_output_to_csv(input_path, path_to_csv, C, T, L, unique_val)
 
-
-if __name__ == "__main__":
+def main():
     args = parse_args()
     input_path = args.i
     assert os.system("mkdir ~/Desktop/temp")==0
@@ -58,5 +61,7 @@ if __name__ == "__main__":
     for img in imgs:
         print(f"Processing image: {img}")
         # Process the output to generate CSV
-        run_all_imgs(img, output_path, path_to_csv)
+        run_all_tasks(img, output_path, path_to_csv)
     assert os.system("rm -r ~/Desktop/temp")==0
+if __name__ == "__main__":
+    main()

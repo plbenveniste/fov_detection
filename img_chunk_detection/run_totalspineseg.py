@@ -34,11 +34,6 @@ def main():
     input_path = args.i
     output_path = args.o
     totalspineseg(input_path, output_path)
-    
-    
-    # Here you would call the totalspineseg function with input_path and output_path
-    # For example:
-    # totalspineseg(input_path, output_path)
 if __name__ == "__main__":
     main()
 
