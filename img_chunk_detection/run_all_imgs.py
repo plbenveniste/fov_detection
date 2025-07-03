@@ -21,6 +21,7 @@ def parse_args():
     parser = argparse.ArgumentParser(description="Identify vertebrae in a NIfTI image")
     parser.add_argument('-i', type=str, required=True, help='Path to the folder containing NIfTI images serving as input for totalspineseg')
     parser.add_argument('-path_to_csv', type=str, required=True, help='Path to save the CSV file containing the vertebrae information for each image')
+    parser.add_argument('-out_dir', type=str,required=True, help='Path to save the output folder.')
     return parser.parse_args()
 
 
@@ -52,16 +53,25 @@ def run_all_tasks(input_path, output_path, path_to_csv):
 def main():
     args = parse_args()
     input_path = args.i
-    assert os.system("mkdir ~/Desktop/temp")==0
-    output_path = "~/Desktop/temp/seg_img.nii.gz"
+    output_dir = args.out_dir
+    # Create the output directory if it doesn't exist
+    os.makedirs(output_dir, exist_ok=True)
+    # Create a temp folder
+    temp_folder = os.path.join(output_dir, "temp")
+    os.makedirs(temp_folder, exist_ok=True)
+    output_path = os.path.join(temp_folder, "seg_img.nii.gz")
     path_to_csv = args.path_to_csv
     imgs = get_all_imgs(input_path)
-    print(imgs)
+    print(f"Found {len(imgs)} images to process.")
+    # print(imgs)
     # Loop through all images and process them
     for img in imgs:
         print(f"Processing image: {img}")
         # Process the output to generate CSV
         run_all_tasks(img, output_path, path_to_csv)
-    assert os.system("rm -r ~/Desktop/temp")==0
+    # Remove the temp folder
+    os.system(f"rm -rf {temp_folder}")
+
+
 if __name__ == "__main__":
     main()
