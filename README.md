@@ -100,3 +100,33 @@ The segmentation is based on these label values:
 ```bash
 python run_all_imgs.py -i /path/to/dataset -path_to_csv /path/to/output.csv
 ```
+## 📊 Vertebrae Frequency Analysis
+
+This project includes a visualization to analyze how frequently each vertebra appears across the dataset.
+
+### 🔍 What It Does
+
+- Reads the final CSV file containing per-image vertebrae presence.
+- Computes the **percentage presence** of each vertebra label (e.g., C1, T2, L5) across all processed images.
+- Displays the results in a **sorted vertical bar chart**, grouped by vertebra region (Cervical, Thoracic, Lumbar).
+- Each bar represents how often that specific vertebra appears across the dataset.
+
+### 📈 Output Example
+
+The script produces a clean and informative **barplot** using Seaborn, with the following features:
+- Vertically-oriented histogram
+- Color-coded bars using a `viridis` palette
+- Vertebrae sorted in anatomical order (C1–C7, T1–T12, L1–L5)
+- Saved automatically as an image file (e.g., `vertebrae_frequencies.png`)
+
+See [issue #4](https://github.com/plbenveniste/fov_detection/issues/4) for more details.
+
+### 📁 Output File
+
+The figure is saved automatically in high resolution (`300 dpi`) for use in presentations, papers, or reports.
+
+### Command Line
+
+```bash
+python stats.py -i /path/to/csv_file -o /path/to/output
+```
