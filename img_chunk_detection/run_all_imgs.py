@@ -35,6 +35,8 @@ def get_all_imgs(input_path):
     # Remove sourcedata
     imgs_list = [img for img in imgs_list if "sourcedata" not in img]
     imgs_list = [img for img in imgs_list if  "/dwi/" not in img]  # Exclude DWI images
+    # Exclude localizers
+    imgs_list = [img for img in imgs_list if "localizer" not in img]
     return imgs_list
 
 
